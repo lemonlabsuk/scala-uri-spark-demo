@@ -8,9 +8,15 @@ lazy val root = (project in file(".")).
       version      := "0.1.0-SNAPSHOT"
     )),
     name := "SparkExample",
-    libraryDependencies += "org.apache.spark" %% "spark-core" % "3.0.1",
-    libraryDependencies += "org.apache.spark" %% "spark-sql" % "3.0.1",
-    libraryDependencies += scalaTest % Test
+    libraryDependencies ++= Seq(
+      spark.core % Provided,
+      spark.sql % Provided,
+      lemonlabs.uri,
+      scalaTest.funspec % Test
+    ),
+    assemblyShadeRules in assembly := Seq(
+      ShadeRule.rename("cats.**" -> "cats.shaded.@1").inAll
+    )
   )
 
 initialCommands in console := """

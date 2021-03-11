@@ -1,32 +1,22 @@
-# Spark development template with SBT
+# Spark Demo with scala-uri
 
-## Install & Setup
+## Usage
 
-```
-git clone https://github.com/sanori/spark-sbt.git
-cd spark-sbt
-```
-
-If you want to import this project as Scala-IDE, Eclipse project, run the following command:
+Build the fatjar with the command below. This shades cats which is necessary for the meanwhile as spark 3
+has a dependency on a milestone version of cats-kernel 2.0.0 which is binary incompatible with the released
+versions of cats 2.x.x
 
 ```
-sbt eclipse
+sbt assembly
 ```
 
-## Word count of Shakespeare
+Then you should be able to run with:
 
-A sample Spark program that count the words of all the works of William Shakespeare are included. There are two versions of word-count. One for RDD version, and the other is DataFrame version.
+```
+YOUR_SPARK_INSTALL/bin/spark-submit \
+  --class "example.UriDemo" \
+  --master "local[4]" \
+  target/scala-2.12/SparkExample-assembly-0.1.0-SNAPSHOT.jar
+```
 
-The text of William Shakespeare was gotten from <https://datahub.io/dataset/william-shakespeare-plays/resource/514d3c17-8469-4ae8-b83f-57678af50735>
-
-## Running Spark on Scala Worksheet
-
-An example to run Spark on Scala Worksheet is presented as <src/wordCount.sc>. A Scala worksheet template for Spark is also provided as <src/sparkWoksheet.template.sc>.
-
-The detail explanation of the Spark worksheet is available at <http://sanori.github.io/2017/07/Running-Spark-on-Scala-Worksheet/>.
-
-## `sbt console` like `spark-shell`
-
-In this project, `sbt console` works like as `spark-shell`. You don't need to install Spark to use spark-shell if you are developing with [sbt](http://www.scala-sbt.org/).
-
-The first time to run `sbt console`, it may take several minutes or almost an hour due to download Spark modules.
+And you should see `www.example.com` printed to the console
