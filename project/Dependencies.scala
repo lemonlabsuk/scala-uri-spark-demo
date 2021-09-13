@@ -2,7 +2,7 @@ import sbt._
 
 object Dependencies {
   object spark {
-    val version = "3.0.2"
+    val version = "3.1.1"
     lazy val core = "org.apache.spark" %% "spark-core" % version
     lazy val sql = "org.apache.spark" %% "spark-sql" % version
   }
